@@ -1,16 +1,32 @@
 package com.allangabr.crud.dto;
 
 import com.allangabr.crud.model.entities.Client;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
 
 public class ClientDTO {
 
     private Long id;
+
+    @NotBlank
+    @Size(min = 2, max = 99)
     private String name;
+
+    @CPF
     private String cpf;
+
+    @Positive
     private Double income;
+
+    @PastOrPresent
     private LocalDate birthDate;
+
+    @Positive
     private Integer children;
 
     public ClientDTO(){
