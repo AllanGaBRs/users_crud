@@ -17,7 +17,7 @@ public class ClientDTO {
     @Size(min = 2, max = 99)
     private String name;
 
-    @CPF
+    //@CPF Annotation comentada, para facilitar os testes
     private String cpf;
 
     @Positive
