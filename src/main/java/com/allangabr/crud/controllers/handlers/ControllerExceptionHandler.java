@@ -3,6 +3,7 @@ package com.allangabr.crud.controllers.handlers;
 import com.allangabr.crud.dto.CustomError;
 import com.allangabr.crud.dto.FieldMessage;
 import com.allangabr.crud.dto.ValidationError;
+import com.allangabr.crud.services.exceptions.DatabaseException;
 import com.allangabr.crud.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
@@ -29,6 +30,16 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(httpStatus).body(customError);
     }
 
+    @ExceptionHandler(DatabaseException.class)
+    public ResponseEntity<CustomError> database(DatabaseException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        CustomError err = new CustomError(
+                Instant.now(),
+                status.value(),
+                e.getMessage(),
+                request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<CustomError> methodArgumentNotValidFound(MethodArgumentNotValidException e, HttpServletRequest request){
